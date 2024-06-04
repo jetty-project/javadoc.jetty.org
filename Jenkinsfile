@@ -36,7 +36,7 @@ pipeline {
                                  "PATH+MAVEN=${env.JAVA_HOME}/bin:${tool 'maven3'}/bin",
                                  "MAVEN_OPTS=-Xms10g -Xmx10g -Djava.awt.headless=true"]) {
                             configFileProvider([configFile(fileId: 'oss-settings.xml', variable: 'GLOBAL_MVN_SETTINGS')]) {
-                                sh "mvn -ntp -s $GLOBAL_MVN_SETTINGS -V -B clean install -e -DskipTests -T3 "
+                                sh "mvn -ntp -s $GLOBAL_MVN_SETTINGS -V -B clean install -e -DskipTests -T3 -Dmaven.build.cache.enabled=false"
                                 sh "ls -lrt"
                             }
                         }
