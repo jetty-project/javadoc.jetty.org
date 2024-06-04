@@ -1,0 +1,48 @@
+#!groovy
+
+pipeline {
+    agent { node { label 'linux' } }
+    tools {
+        maven 'maven3'
+    }
+//  triggers {
+//    upstream(upstreamProjects: 'tck/tck-olamy-github-tck-run-module-glassfish') //, threshold: hudson.model.Result.SUCCESS)
+//  }
+    options {
+        buildDiscarder logRotator( numToKeepStr: '50' )
+    }
+    parameters {
+
+        string( defaultValue: 'jetty-12.0.10', description: 'GIT branch name to build Jetty (jetty-12.0.10)',
+                name: 'JETTY_TAG' )
+
+        string( defaultValue: 'jdk17', description: 'JDK to build Jetty', name: 'JDKBUILD' )
+
+        string( defaultValue: '', description: 'Extra Maven Args', name: 'MVN_ARGS' )
+
+    }
+
+    stages {
+
+        stage("Checkout Jetty Sources") {
+            steps {
+                ws('tmp') {
+                    checkout([$class           : 'GitSCM',
+                              branches         : [[name: "$JETTY_TAG"]],
+                              extensions       : [[$class: 'CloneOption', depth: 1, noTags: true, shallow: true, reference: "/home/jenkins/jetty.project.git"]],
+                              userRemoteConfigs: [[url: 'https://github.com/eclipse/jetty.project.git']]])
+                    timeout(time: 30, unit: 'MINUTES') {
+                        withEnv(["JAVA_HOME=${tool "$JDKBUILD"}",
+                                 "PATH+MAVEN=${env.JAVA_HOME}/bin:${tool 'maven3'}/bin",
+                                 "MAVEN_OPTS=-Xms2g -Xmx4g -Djava.awt.headless=true"]) {
+                            configFileProvider([configFile(fileId: 'oss-settings.xml', variable: 'GLOBAL_MVN_SETTINGS')]) {
+                                sh "mvn -ntp -s $GLOBAL_MVN_SETTINGS -V -B clean install -e -DskipTests"
+                                sh "ls -lrt"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
