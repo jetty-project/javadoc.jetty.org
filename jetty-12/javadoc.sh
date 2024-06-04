@@ -1,1 +1,1 @@
-/home/joakim/java/jvm/jdk-17.0.10+7/bin/javadoc @options @packages
+/home/jenkins/agent/tools/hudson.model.JDK/jdk17/bin/javadoc @options @packages
