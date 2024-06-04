@@ -60,6 +60,7 @@ pipeline {
                 unstash 'apidocs'
                 sh 'ls -lrt'
                 sh 'ls -lrt javadoc'
+                sh 'cp -r javadoc/target/apidocs/* $JAVADOC_PATH/'
                 sh "git status"
             }
         }
