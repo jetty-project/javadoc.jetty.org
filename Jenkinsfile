@@ -55,11 +55,11 @@ pipeline {
                 // github-app-jetty-project
                 checkout([$class           : 'GitSCM',
                           branches         : [[name: "*/main"]],
-                          extensions       : [[$class: 'CloneOption', depth: 1, shallow: true]],
                           userRemoteConfigs: [[url: 'https://github.com/jetty-project/javadoc.jetty.org.git']]])
 
                 unstash 'apidocs'
                 sh 'ls -lrt'
+                sh 'ls -lrt javadoc'
                 sh "git status"
             }
         }
