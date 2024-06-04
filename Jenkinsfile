@@ -74,6 +74,12 @@ pipeline {
                 sh 'cp -r javadoc/target/apidocs/* $JAVADOC_PATH/'
                 sh 'rm -rf javadoc'
                 sh "git status"
+                sh "git add -A $JAVADOC_PATH/"
+                sh "git commit -am'update javadoc for $JETTY_TAG in path $JAVADOC_PATH'"
+                sh('''
+                    git config --local credential.helper "!f() { echo username=\\$GIT_AUTH_USR; echo password=\\$GIT_AUTH_PSW; }; f"
+                    git push origin main
+                ''')
             }
         }
     }
