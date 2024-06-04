@@ -57,11 +57,11 @@ pipeline {
             steps {
 
                 sh('''
-                    //git clone https://github.com/jetty-project/javadoc.jetty.org.git                                    
                     git config user.name '$GIT_AUTH_USR'
                     git config user.email '$GIT_AUTH_USR@users.noreply.webtide.com'       
                     git checkout main         
                 ''')
+//git clone https://github.com/jetty-project/javadoc.jetty.org.git
 
 
 //                checkout([$class           : 'GitSCM',
