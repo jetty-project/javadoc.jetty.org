@@ -31,6 +31,7 @@ pipeline {
         stage("Checkout Jetty Sources") {
             steps {
                 //ws('tmp') {
+                    sh "ls -lrt"
                     checkout([$class           : 'GitSCM',
                               branches         : [[name: "$JETTY_TAG"]],
                               extensions       : [[$class: 'CloneOption', depth: 1, shallow: true, reference: "/home/jenkins/jetty.project.git"]],
