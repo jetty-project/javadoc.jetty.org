@@ -29,7 +29,7 @@ pipeline {
                 ws('tmp') {
                     checkout([$class           : 'GitSCM',
                               branches         : [[name: "$JETTY_TAG"]],
-                              extensions       : [[$class: 'CloneOption', depth: 1, noTags: true, shallow: true, reference: "/home/jenkins/jetty.project.git"]],
+                              extensions       : [[$class: 'CloneOption', depth: 1, shallow: true, reference: "/home/jenkins/jetty.project.git"]],
                               userRemoteConfigs: [[url: 'https://github.com/eclipse/jetty.project.git']]])
                     timeout(time: 30, unit: 'MINUTES') {
                         withEnv(["JAVA_HOME=${tool "$JDKBUILD"}",
