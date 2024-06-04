@@ -51,16 +51,27 @@ pipeline {
             }
         }
         stage("Commit new Javadoc") {
+            environment {
+                GIT_AUTH = credentials('github-app-jetty-project')
+            }
             steps {
-                // github-app-jetty-project
-                checkout([$class           : 'GitSCM',
-                          branches         : [[name: "*/main"]],
-                          userRemoteConfigs: [[url: 'https://github.com/jetty-project/javadoc.jetty.org.git']]])
+
+                sh('''
+                    git clone https://github.com/jetty-project/javadoc.jetty.org.git
+                    git config user.name '$GIT_AUTH_USR'
+                    git config user.email '$GIT_AUTH_USR@users.noreply.webtide.com'                
+                ''')
+
+
+//                checkout([$class           : 'GitSCM',
+//                          branches         : [[name: "*/main"]],
+//                          userRemoteConfigs: [[url: 'https://github.com/jetty-project/javadoc.jetty.org.git']]])
 
                 unstash 'apidocs'
                 sh 'ls -lrt'
                 sh 'ls -lrt javadoc'
                 sh 'cp -r javadoc/target/apidocs/* $JAVADOC_PATH/'
+                sh 'rm -rf javadoc'
                 sh "git status"
             }
         }
