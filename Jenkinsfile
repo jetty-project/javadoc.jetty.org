@@ -41,7 +41,8 @@ pipeline {
                                  "MAVEN_OPTS=-Xms10g -Xmx10g -Djava.awt.headless=true"]) {
                             configFileProvider([configFile(fileId: 'oss-settings.xml', variable: 'GLOBAL_MVN_SETTINGS')]) {
                                 sh "mvn -ntp -s $GLOBAL_MVN_SETTINGS -V -B clean install -e -DskipTests -T3 -Dmaven.build.cache.enabled=false"
-                                sh "cp -r javadoc/target/apidocs/* $JAVADOC_PATH"
+                                sh "ls -lrt"
+                                sh "cp -r javadoc/target/apidocs/* ./$JAVADOC_PATH/"
                                 sh "ls -lrt"
                                 sh "git status"
 
