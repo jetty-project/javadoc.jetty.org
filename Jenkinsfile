@@ -28,9 +28,9 @@ pipeline {
 
     stages {
 
-        stage("Checkout Jetty Sources") {
+        stage("Checkout Jetty Sources/ Build Javadoc") {
             steps {
-                //ws('tmp') {
+                ws('tmp') {
                     sh "ls -lrt"
                     checkout([$class           : 'GitSCM',
                               branches         : [[name: "$JETTY_TAG"]],
@@ -43,15 +43,23 @@ pipeline {
                             configFileProvider([configFile(fileId: 'oss-settings.xml', variable: 'GLOBAL_MVN_SETTINGS')]) {
                                 sh "mvn -ntp -s $GLOBAL_MVN_SETTINGS -V -B clean install -e -DskipTests -T3 -Dmaven.build.cache.enabled=false"
                                 sh "ls -lrt"
-                                sh "cp -r javadoc/target/apidocs/* ./$JAVADOC_PATH/"
-                                sh "ls -lrt"
-                                sh "git status"
-
+                                stash includes: 'javadoc/target/apidocs/**/*', name: 'apidocs'
                             }
                         }
                     }
-                //}
+                }
             }
+        }
+        stage("Commit new Javadoc") {
+            // github-app-jetty-project
+            checkout([$class           : 'GitSCM',
+                      branches: [[name: "*/main"]],
+                      extensions       : [[$class: 'CloneOption', depth: 1, shallow: true]],
+                      userRemoteConfigs: [[url: 'https://github.com/jetty-project/javadoc.jetty.org.git']]])
+
+            unstash 'apidocs'
+            sh 'ls -lrt'
+            sh "git status"
         }
     }
 }
