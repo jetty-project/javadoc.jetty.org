@@ -20,6 +20,10 @@ pipeline {
 
         string( defaultValue: '', description: 'Extra Maven Args', name: 'MVN_ARGS' )
 
+        choice( description: 'Javadoc branch',
+                name: 'JAVADOC_PATH',
+                choices: ['jetty-12','jetty-11','jetty-10','jetty-9'] )
+
     }
 
     stages {
@@ -37,7 +41,10 @@ pipeline {
                                  "MAVEN_OPTS=-Xms10g -Xmx10g -Djava.awt.headless=true"]) {
                             configFileProvider([configFile(fileId: 'oss-settings.xml', variable: 'GLOBAL_MVN_SETTINGS')]) {
                                 sh "mvn -ntp -s $GLOBAL_MVN_SETTINGS -V -B clean install -e -DskipTests -T3 -Dmaven.build.cache.enabled=false"
+                                sh "cp -r javadoc/target/apidocs/* $JAVADOC_PATH"
                                 sh "ls -lrt"
+                                sh "git status"
+
                             }
                         }
                     }
