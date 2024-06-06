@@ -69,7 +69,7 @@ pipeline {
 
                 unstash 'apidocs'
                 sh 'ls -lrt'
-                sh 'ls -lrt javadoc'
+                sh "ls -lrt $JAVADOC_LOCAL_PATH"
                 sh "cp -r $JAVADOC_LOCAL_PATH/* $JAVADOC_PATH/"
                 sh 'rm -rf javadoc'
                 sh "git status"
