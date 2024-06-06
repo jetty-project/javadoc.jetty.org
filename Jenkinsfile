@@ -22,7 +22,7 @@ pipeline {
 
         string( defaultValue: '-ntp -V -B -e -DskipTests ', description: 'Extra Maven Args', name: 'MVN_ARGS' )
 
-        string( defaultValue: 'javadoc/target/apidocs', description: 'Javadoc path (for Jetty 9 use target/site/apidocs)', name: 'JAVADOC_PATH' )
+        string( defaultValue: 'javadoc/target/apidocs', description: 'Javadoc path (for Jetty 9 use target/site/apidocs)', name: 'JAVADOC_LOCAL_PATH' )
 
         choice( description: 'Javadoc branch',
                 name: 'JAVADOC_PATH',
@@ -47,8 +47,8 @@ pipeline {
                             configFileProvider([configFile(fileId: 'oss-settings.xml', variable: 'GLOBAL_MVN_SETTINGS')]) {
                                 sh "mvn -s $GLOBAL_MVN_SETTINGS $MVN_ARGS $MVN_GOALS"
                                 sh "ls -lrt"
-                                sh "ls -lrt $JAVADOC_PATH"
-                                stash includes: "$JAVADOC_PATH/**/*", name: "apidocs"
+                                sh "ls -lrt $JAVADOC_LOCAL_PATH"
+                                stash includes: "$JAVADOC_LOCAL_PATH/**/*", name: "apidocs"
                             }
                         }
                     }
@@ -70,7 +70,7 @@ pipeline {
                 unstash 'apidocs'
                 sh 'ls -lrt'
                 sh 'ls -lrt javadoc'
-                sh 'cp -r javadoc/target/apidocs/* $JAVADOC_PATH/'
+                sh "cp -r $JAVADOC_LOCAL_PATH/* $JAVADOC_PATH/"
                 sh 'rm -rf javadoc'
                 sh "git status"
                 sh "git add -A $JAVADOC_PATH/"
