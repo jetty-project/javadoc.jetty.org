@@ -47,6 +47,7 @@ pipeline {
                             configFileProvider([configFile(fileId: 'oss-settings.xml', variable: 'GLOBAL_MVN_SETTINGS')]) {
                                 sh "mvn -s $GLOBAL_MVN_SETTINGS $MVN_ARGS $MVN_GOALS"
                                 sh "ls -lrt"
+                                sh "ls -lrt $JAVADOC_PATH"
                                 stash includes: "$JAVADOC_PATH/**/*", name: "apidocs"
                             }
                         }
