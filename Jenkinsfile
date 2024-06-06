@@ -18,7 +18,11 @@ pipeline {
 
         string( defaultValue: 'jdk17', description: 'JDK to build Jetty', name: 'JDKBUILD' )
 
-        string( defaultValue: '', description: 'Extra Maven Args', name: 'MVN_ARGS' )
+        string( defaultValue: 'clean install -T3 -Dmaven.build.cache.enabled=false', description: 'Maven Args for jetty 9 use clean verify javadoc:aggregate', name: 'MVN_GOALS' )
+
+        string( defaultValue: '-ntp -V -B -e -DskipTests ', description: 'Extra Maven Args', name: 'MVN_ARGS' )
+
+        string( defaultValue: 'javadoc/target/apidocs', description: 'Javadoc path (for Jetty 9 use target/site/apidocs)', name: 'JAVADOC_PATH' )
 
         choice( description: 'Javadoc branch',
                 name: 'JAVADOC_PATH',
@@ -41,9 +45,9 @@ pipeline {
                                  "PATH+MAVEN=${env.JAVA_HOME}/bin:${tool 'maven3'}/bin",
                                  "MAVEN_OPTS=-Xms10g -Xmx10g -Djava.awt.headless=true"]) {
                             configFileProvider([configFile(fileId: 'oss-settings.xml', variable: 'GLOBAL_MVN_SETTINGS')]) {
-                                sh "mvn -ntp -s $GLOBAL_MVN_SETTINGS -V -B clean install -e -DskipTests -T3 -Dmaven.build.cache.enabled=false"
+                                sh "mvn -s $GLOBAL_MVN_SETTINGS $MVN_ARGS $MVN_GOALS"
                                 sh "ls -lrt"
-                                stash includes: 'javadoc/target/apidocs/**/*', name: 'apidocs'
+                                stash includes: "$JAVADOC_PATH/**/*", name: "apidocs"
                             }
                         }
                     }
@@ -61,12 +65,6 @@ pipeline {
                     git config user.email '$GIT_AUTH_USR@users.noreply.webtide.com'       
                     git checkout main         
                 ''')
-//git clone https://github.com/jetty-project/javadoc.jetty.org.git
-
-
-//                checkout([$class           : 'GitSCM',
-//                          branches         : [[name: "*/main"]],
-//                          userRemoteConfigs: [[url: 'https://github.com/jetty-project/javadoc.jetty.org.git']]])
 
                 unstash 'apidocs'
                 sh 'ls -lrt'
