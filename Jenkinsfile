@@ -18,7 +18,7 @@ pipeline {
 
         string( defaultValue: 'jdk17', description: 'JDK to build Jetty', name: 'JDKBUILD' )
 
-        string( defaultValue: 'clean install -T3 -Dmaven.build.cache.enabled=false', description: 'Maven Args for jetty 9 use clean verify javadoc:aggregate', name: 'MVN_GOALS' )
+        string( defaultValue: 'clean install -T3 -Dmaven.build.cache.enabled=false', description: 'Maven Args for jetty 9 use verify org.apache.maven.plugins:maven-javadoc-plugin:3.7.0:aggregate -DlegacyMode=true -T5', name: 'MVN_GOALS' )
 
         string( defaultValue: '-ntp -V -B -e -DskipTests ', description: 'Extra Maven Args', name: 'MVN_ARGS' )
 
