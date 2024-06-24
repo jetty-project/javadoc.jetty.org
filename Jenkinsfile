@@ -76,12 +76,12 @@ pipeline {
                 }
                 sh('''
                     ls -lr
-                    ls -lrt $JAVADOC_LOCAL_PATH
-                    cp -r $JAVADOC_LOCAL_PATH/* $JAVADOC_PATH/
+                    ls -lrt '$JAVADOC_LOCAL_PATH'
+                    cp -r '$JAVADOC_LOCAL_PATH/*' '$JAVADOC_PATH/'
                     rm -rf javadoc
                     git status
-                    //git add -A $JAVADOC_PATH/
-                    //git commit -am'update javadoc for $JETTY_TAG in path $JAVADOC_PATH'
+                    //git add -A '$JAVADOC_PATH/'
+                    //git commit -am"update javadoc for $JETTY_TAG in path $JAVADOC_PATH"
                 
                     git config --local credential.helper "!f() { echo username=\\$GIT_AUTH_USR; echo password=\\$GIT_AUTH_PSW; }; f"
                     //git push origin main
