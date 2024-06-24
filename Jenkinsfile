@@ -35,7 +35,6 @@ pipeline {
         stage("Checkout Jetty Sources/ Build Javadoc") {
             steps {
                 ws('tmp') {
-                    sh "ls -lrt"
                     checkout([$class           : 'GitSCM',
                               branches         : [[name: "$JETTY_TAG"]],
                               extensions       : [[$class: 'CloneOption', depth: 1, shallow: true, reference: "/home/jenkins/jetty.project.git"]],
@@ -46,8 +45,6 @@ pipeline {
                                  "MAVEN_OPTS=-Xms10g -Xmx10g -Djava.awt.headless=true"]) {
                             configFileProvider([configFile(fileId: 'oss-settings.xml', variable: 'GLOBAL_MVN_SETTINGS')]) {
                                 sh "mvn -s $GLOBAL_MVN_SETTINGS $MVN_ARGS $MVN_GOALS"
-                                sh "ls -lrt"
-                                sh "ls -lrt $JAVADOC_LOCAL_PATH"
                                 stash includes: "$JAVADOC_LOCAL_PATH/**/*", name: "apidocs"
                             }
                         }
@@ -68,16 +65,26 @@ pipeline {
                 ''')
 
                 unstash 'apidocs'
-                sh 'ls -lrt'
-                sh "ls -lrt $JAVADOC_LOCAL_PATH"
-                sh "cp -r $JAVADOC_LOCAL_PATH/* $JAVADOC_PATH/"
-                sh 'rm -rf javadoc'
-                sh "git status"
-                sh "git add -A $JAVADOC_PATH/"
-                sh "git commit -am'update javadoc for $JETTY_TAG in path $JAVADOC_PATH'"
+
+                script {
+                    if($JAVADOC_PATH != 'jetty-12') {
+                        sh('''
+                            echo need to update canonical because $JAVADOC_PATH
+                            bash ./_update_canonical_links.sh $JAVADOC_PATH
+                        ''')
+                    }
+                }
                 sh('''
+                    sh 'ls -lrt'
+                    sh "ls -lrt $JAVADOC_LOCAL_PATH"
+                    sh "cp -r $JAVADOC_LOCAL_PATH/* $JAVADOC_PATH/"
+                    sh 'rm -rf javadoc'
+                    sh "git status"
+                    //sh "git add -A $JAVADOC_PATH/"
+                    //sh "git commit -am'update javadoc for $JETTY_TAG in path $JAVADOC_PATH'"
+                
                     git config --local credential.helper "!f() { echo username=\\$GIT_AUTH_USR; echo password=\\$GIT_AUTH_PSW; }; f"
-                    git push origin main
+                    //git push origin main
                 ''')
             }
         }
