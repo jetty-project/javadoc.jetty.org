@@ -9,7 +9,7 @@ pipeline {
 //    upstream(upstreamProjects: 'tck/tck-olamy-github-tck-run-module-glassfish') //, threshold: hudson.model.Result.SUCCESS)
 //  }
     options {
-        buildDiscarder logRotator( numToKeepStr: '50' )
+        buildDiscarder logRotator( numToKeepStr: '30' )
     }
     parameters {
 
@@ -67,7 +67,7 @@ pipeline {
                 unstash 'apidocs'
 
                 script {
-                    if($JAVADOC_PATH != 'jetty-12') {
+                    if("$JAVADOC_PATH" != 'jetty-12') {
                         sh('''
                             echo need to update canonical because $JAVADOC_PATH
                             bash ./_update_canonical_links.sh $JAVADOC_PATH
