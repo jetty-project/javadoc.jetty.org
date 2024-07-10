@@ -92,7 +92,6 @@ org.eclipse.jetty.quickstart
 org.eclipse.jetty.requestlog.jmh
 org.eclipse.jetty.rewrite
 org.eclipse.jetty.rewrite.handler
-org.eclipse.jetty.runner
 org.eclipse.jetty.security
 org.eclipse.jetty.security.authentication
 org.eclipse.jetty.security.jaspi
