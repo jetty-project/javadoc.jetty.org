@@ -83,7 +83,7 @@ pipeline {
                     rm -rf javadoc
                     git status
                     git add -A $JAVADOC_PATH/
-                    git commit -a"update javadoc for $JETTY_TAG in path $JAVADOC_PATH"
+                    git commit -m "update javadoc for $JETTY_TAG in path $JAVADOC_PATH"
 
                 
                     git config --local credential.helper "!f() { echo username=\\$GIT_AUTH_USR; echo password=\\$GIT_AUTH_PSW; }; f"
