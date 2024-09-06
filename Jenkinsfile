@@ -73,7 +73,7 @@ pipeline {
                             bash ./_update_canonical_links.sh $JAVADOC_PATH
                         ''')
                     } else {
-                        sh "in jetty 12 no need to _update_canonical_links"
+                        sh "echo 'in jetty 12 no need to _update_canonical_links'"
                     }
                 }
                 sh('''
