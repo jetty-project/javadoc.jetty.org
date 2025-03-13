@@ -5,28 +5,25 @@ pipeline {
     tools {
         maven 'maven3'
     }
-//  triggers {
-//    upstream(upstreamProjects: 'tck/tck-olamy-github-tck-run-module-glassfish') //, threshold: hudson.model.Result.SUCCESS)
-//  }
     options {
         buildDiscarder logRotator( numToKeepStr: '30' )
     }
     parameters {
 
-        string( defaultValue: 'jetty-12.0.10', description: 'GIT branch name to build Jetty (jetty-12.0.10)',
+        string( defaultValue: 'jetty-12.0.17', description: 'GIT branch name to build Jetty (jetty-12.0.10)',
                 name: 'JETTY_TAG' )
 
         string( defaultValue: 'jdk17', description: 'JDK to build Jetty', name: 'JDKBUILD' )
 
-        string( defaultValue: 'clean install -T3 -Dmaven.build.cache.enabled=false', description: 'Maven Args for jetty 9 use verify org.apache.maven.plugins:maven-javadoc-plugin:3.7.0:aggregate -DlegacyMode=true -T5', name: 'MVN_GOALS' )
+        string( defaultValue: 'clean install -Pjavadoc-aggregate javadoc:aggregate -DskipTests -Dmaven.build.cache.enabled=false ', description: 'Maven Args for jetty 9 use verify org.apache.maven.plugins:maven-javadoc-plugin:3.7.0:aggregate -DlegacyMode=true -T5,', name: 'MVN_GOALS' )
 
         string( defaultValue: '-ntp -V -B -e -DskipTests ', description: 'Extra Maven Args', name: 'MVN_ARGS' )
 
-        string( defaultValue: 'javadoc/target/apidocs', description: 'Javadoc path (for Jetty 9 use target/site/apidocs)', name: 'JAVADOC_LOCAL_PATH' )
+        string( defaultValue: 'target/reports/apidocs', description: 'Javadoc path (for Jetty 9 use target/site/apidocs, 10/11: javadoc/target/apidocs)', name: 'JAVADOC_LOCAL_PATH' )
 
         choice( description: 'Javadoc branch',
                 name: 'JAVADOC_PATH',
-                choices: ['jetty-12','jetty-11','jetty-10','jetty-9'] )
+                choices: ['jetty-12.1','jetty-12','jetty-11','jetty-10','jetty-9'] )
 
     }
 
