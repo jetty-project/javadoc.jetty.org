@@ -1,1 +1,1 @@
-/home/jenkins/agent/tools/hudson.model.JDK/jdk17/bin/javadoc @options @packages
+/home/jenkins/agent/tools/hudson.model.JDK/jdk21/jdk-21.0.5+11/bin/javadoc -J-Duser.language= -J-Duser.country= @options @argfile
