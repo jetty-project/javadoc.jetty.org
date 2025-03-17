@@ -1,1 +1,1 @@
-/opt/openjdk-22.0.1+8/bin/javadoc @options @packages
+/home/jenkins/agent/tools/hudson.model.JDK/jdk17/bin/javadoc -J-Duser.language= -J-Duser.country= @options @packages
