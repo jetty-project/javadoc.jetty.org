@@ -65,6 +65,7 @@ org.eclipse.jetty.ee10.websocket.server.config
 org.eclipse.jetty.ee10.websocket.servlet
 org.eclipse.jetty.ee8.annotations
 org.eclipse.jetty.ee8.apache.jsp
+org.eclipse.jetty.ee8.cdi
 org.eclipse.jetty.ee8.jndi.factories
 org.eclipse.jetty.ee8.jsp
 org.eclipse.jetty.ee8.nested
