@@ -675,6 +675,7 @@
 '/home/jenkins/agent/tmp/jetty-core/jetty-server/src/main/java/org/eclipse/jetty/server/OptionalSslConnectionFactory.java'
 '/home/jenkins/agent/tmp/jetty-core/jetty-server/src/main/java/org/eclipse/jetty/server/RequestLog.java'
 '/home/jenkins/agent/tmp/jetty-core/jetty-server/src/main/java/org/eclipse/jetty/server/ResourceService.java'
+'/home/jenkins/agent/tmp/jetty-core/jetty-server/src/main/java/org/eclipse/jetty/server/NetworkConnectionLimit.java'
 '/home/jenkins/agent/tmp/jetty-core/jetty-server/src/main/java/org/eclipse/jetty/server/SymlinkAllowedResourceAliasChecker.java'
 '/home/jenkins/agent/tmp/jetty-core/jetty-server/src/main/java/org/eclipse/jetty/server/NetworkConnector.java'
 '/home/jenkins/agent/tmp/jetty-core/jetty-server/src/main/java/org/eclipse/jetty/server/ConnectionLimit.java'
