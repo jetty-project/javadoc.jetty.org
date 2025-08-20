@@ -17,7 +17,7 @@ pipeline {
 
         string( defaultValue: 'clean install -Pjavadoc-aggregate javadoc:aggregate -DskipTests -Dmaven.build.cache.enabled=false ', description: 'Maven Args for jetty 9 use verify org.apache.maven.plugins:maven-javadoc-plugin:3.7.0:aggregate -DlegacyMode=true -T5, 10/11:  mvn clean install -DskipTests,', name: 'MVN_GOALS' )
 
-        string( defaultValue: '-ntp -V -B -e -DskipTests ', description: 'Extra Maven Args', name: 'MVN_ARGS' )
+        string( defaultValue: '-ntp -V -B -e -DskipTests -Dmaven.javadoc.disableNoFonts=true ', description: 'Extra Maven Args', name: 'MVN_ARGS' )
 
         string( defaultValue: 'target/reports/apidocs', description: 'Javadoc path (for Jetty 9 use target/site/apidocs, 10/11: javadoc/target/reports/apidocs)', name: 'JAVADOC_LOCAL_PATH' )
 
