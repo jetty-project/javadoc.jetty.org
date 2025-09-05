@@ -221,6 +221,7 @@
 '/home/jenkins/agent/tmp/jetty-core/jetty-http-spi/src/main/java/org/eclipse/jetty/http/spi/JettyHttpsExchange.java'
 '/home/jenkins/agent/tmp/jetty-core/jetty-http-spi/src/main/java/org/eclipse/jetty/http/spi/JettyHttpServer.java'
 '/home/jenkins/agent/tmp/jetty-core/jetty-http-spi/src/main/java/org/eclipse/jetty/http/spi/JettyHttpServerProvider.java'
+'/home/jenkins/agent/tmp/jetty-core/jetty-http-spi/src/main/java/org/eclipse/jetty/http/spi/JettyHttpsParameters.java'
 '/home/jenkins/agent/tmp/jetty-core/jetty-http-spi/src/main/java/org/eclipse/jetty/http/spi/JettyExchange.java'
 '/home/jenkins/agent/tmp/jetty-core/jetty-http-spi/src/main/java/org/eclipse/jetty/http/spi/DelegatingThreadPool.java'
 '/home/jenkins/agent/tmp/jetty-core/jetty-http-spi/src/main/java/org/eclipse/jetty/http/spi/JettyHttpContext.java'
