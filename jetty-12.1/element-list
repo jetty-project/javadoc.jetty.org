@@ -10,8 +10,10 @@ org.eclipse.jetty.annotations
 org.eclipse.jetty.client
 org.eclipse.jetty.client.jmx
 org.eclipse.jetty.client.transport
+org.eclipse.jetty.client.transport.jmx
 org.eclipse.jetty.compression
 org.eclipse.jetty.compression.brotli
+org.eclipse.jetty.compression.client
 org.eclipse.jetty.compression.gzip
 org.eclipse.jetty.compression.server
 org.eclipse.jetty.compression.zstandard
