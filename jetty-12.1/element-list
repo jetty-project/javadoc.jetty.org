@@ -232,10 +232,6 @@ org.eclipse.jetty.quic.common
 org.eclipse.jetty.quic.common.frames
 org.eclipse.jetty.quic.quiche
 org.eclipse.jetty.quic.quiche.client
-org.eclipse.jetty.quic.quiche.foreign
-org.eclipse.jetty.quic.quiche.foreign.linux
-org.eclipse.jetty.quic.quiche.foreign.macos
-org.eclipse.jetty.quic.quiche.foreign.windows
 org.eclipse.jetty.quic.quiche.jna
 org.eclipse.jetty.quic.quiche.jna.linux
 org.eclipse.jetty.quic.quiche.jna.macos
