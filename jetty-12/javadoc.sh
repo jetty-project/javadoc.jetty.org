@@ -1,1 +1,1 @@
-/home/joakim/java/jvm/jdk-17.0.15+6/bin/javadoc -J-Duser.language= -J-Duser.country= @options @argfile
+/home/jenkins/agent/tools/hudson.model.JDK/jdk17/bin/javadoc -J-Duser.language= -J-Duser.country= @options @argfile
